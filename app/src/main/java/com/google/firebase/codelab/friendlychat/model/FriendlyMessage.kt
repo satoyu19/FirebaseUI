@@ -15,10 +15,11 @@
  */
 package com.google.firebase.codelab.friendlychat.model
 
+// TODO: 送信時刻項目追加
 data class FriendlyMessage(
     val text: String? = null,
     val name: String? = null,
     val photoUrl: String? = null,
     val imageUrl: String? = null,
-//    val uid: String? = null
+    val uid: String? = null
 )

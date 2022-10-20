@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         /** デバッグモードで実行する場合、Firebase Emulator Suiteに接続します。firebase.json参照 **/
-        //note: BuildConfig.DEBUGがfalseのため、trueに変更した
+        //note: BuildConfig.DEBUGがfalseのため、trueに変更した。使用してるものが違う？
         if(true) {
             //databaseインスタンスをRealtime Databaseエミュレーターと通信するように変更、その他同意
             //host →　10.0.2.2 "は、Android Emulatorがホストコンピュータの "localhost "に接続するための特別なIPアドレスです。
@@ -95,7 +95,8 @@ class MainActivity : AppCompatActivity() {
         val messagesRef = db.reference.child(MESSAGES_CHILD)    //realtimedatabaseのmessagesを参照
 
         /** FirebaseRecyclerAdapter は、RecyclerView に Query をバインドします。
-         * データが追加、削除、変更されると、これらの更新は自動的にリアルタイムで UI に適用されます。 **/
+         * データが追加、削除、変更されると、これらの更新は自動的にリアルタイムで UI に適用されます。
+         * messagesRefのデータをFriendlyMessage型にパースしている？**/
         val options = FirebaseRecyclerOptions.Builder<FriendlyMessage>()
             .setQuery(messagesRef, FriendlyMessage::class.java)
             .build()
@@ -103,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         adapter = FriendlyMessageAdapter(options, getUserName())
         binding.progressBar.visibility = ProgressBar.INVISIBLE
         manager = LinearLayoutManager(this)
-        manager.stackFromEnd = true
+//        manager.stackFromEnd = true　←　上部から表示させたいため、消した
         binding.messageRecyclerView.layoutManager = manager    //レイアウト マネージャーによって、リスト内の個々の要素が配置される
         binding.messageRecyclerView.adapter = adapter
 
@@ -116,20 +117,13 @@ class MainActivity : AppCompatActivity() {
         /** メッセージの送信　**/
         // TODO: 元に戻す 
         // 送信ボタンがクリックされたら、テキストメッセージを送信する
-//        binding.sendButton.setOnClickListener{
-//            val friendlyMessage = FriendlyMessage(
-//                binding.messageEditText.text.toString(),
-//                getUserName(),
-//                getPhotoUrl(),
-//                null,
-//            )
             binding.sendButton.setOnClickListener{
                 val friendlyMessage = FriendlyMessage(
                     binding.messageEditText.text.toString(),
                     getUserName(),
                     getPhotoUrl(),
-                    null
-//                    auth.currentUser!!.uid.toString()
+                    null,
+                    auth.currentUser!!.uid
                 )
             //メッセージの追加。push()メソッドは、自動生成された ID をプッシュされたオブジェクトのパスに追加します。
             // これらの ID は連続しているため、新しいメッセージは確実にリストの最後に追加されます。
