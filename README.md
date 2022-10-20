@@ -10,4 +10,4 @@ document: https://firebaseopensource.com/projects/firebase/firebaseui-android/au
 
 ###RealTimeDatabase
 https://firebase.google.com/docs/database/android/read-and-write<br>
- 
+セキュリティールール：https://firebase.google.com/docs/database/security/get-started<br>
